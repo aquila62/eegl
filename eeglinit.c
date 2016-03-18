@@ -1,22 +1,22 @@
 /* eeglinit.c - random number generator initialization Version 1.0.0 */
-/* Copyright (C) 2016  aquila62 at github.com */
+/* Copyright (C) 2016 aquila62 at github.com                         */
 
-/* This program is free software; you can redistribute it and/or */
-/* modify it under the terms of the GNU General Public License as */
-/* published by the Free Software Foundation; either version 2 of */
-/* the License, or (at your option) any later version. */
+/* This program is free software; you can redistribute it and/or     */
+/* modify it under the terms of the GNU General Public License as    */
+/* published by the Free Software Foundation; either version 2 of    */
+/* the License, or (at your option) any later version.               */
 
-/* This program is distributed in the hope that it will be useful, */
-/* but WITHOUT ANY WARRANTY; without even the implied warranty of */
-/* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the */
-/* GNU General Public License for more details. */
- 
+/* This program is distributed in the hope that it will be useful,   */
+/* but WITHOUT ANY WARRANTY; without even the implied warranty of    */
+/* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the      */
+/* GNU General Public License for more details.                      */
+
 /* You should have received a copy of the GNU General Public License */
-/* along with this program; if not, write to: */
+/* along with this program; if not, write to:                        */
 
-/* 	Free Software Foundation, Inc. */
-/* 	59 Temple Place - Suite 330 */
-/* 	Boston, MA  02111-1307, USA. */
+   /* Free Software Foundation, Inc.                                 */
+   /* 59 Temple Place - Suite 330                                    */
+   /* Boston, MA 02111-1307, USA.                                    */
 
 /********************************************************/
 /* The LFSR in this generator comes from the following  */
@@ -31,47 +31,51 @@
 
 eefmt *eeglinit(int states)
    {
-   unsigned int dttk;      /* combined date and #ticks */
-   unsigned int *stp,*stq;    /* pointer into state array */
-   time_t now;                /* current date and time */
-   clock_t clk;               /* current number of ticks */
-   struct tms t;              /* structure used by times() */
-   eefmt *ee;                 /* eegl structure */
+   unsigned int dttk;          /* combined date and #ticks */
+   unsigned int *stp,*stq;     /* pointer into state array */
+   time_t now;                 /* current date and time */
+   clock_t clk;                /* current number of ticks */
+   struct tms t;               /* structure used by times() */
+   eefmt *ee;                  /* eegl structure */
+
    /***************************************************/
-   /* allocate memory for eegl structure              */
+   /* allocate memory for eegl structure */
    /***************************************************/
    ee = (eefmt *) malloc(sizeof(eefmt));
    if (ee == NULL)
       {
       fprintf(stderr,"eeglinit: out of memory "
-         "allocating ee\n");
+      "allocating ee\n");
       exit(1);
       } /* out of memory */
-   ee->states = states;        /* save the number of LFSR registers */
+   ee->states = states; /* save the number of LFSR registers */
+
    /***************************************************/
-   /* allocate memory for eegl state array            */
+   /* allocate memory for eegl state array */
    /***************************************************/
    ee->state = (unsigned int *)
-      malloc(sizeof(unsigned int)*ee->states);
+   malloc(sizeof(unsigned int)*ee->states);
    if (ee->state == NULL)
       {
       fprintf(stderr,"initeegl: out of memory "
-         "allocating ee->state\n");
+      "allocating ee->state\n");
       exit(1);
       } /* out of memory */
-   /* declare the GSL taus random number generator */
+
+   /* declare the GSL random number generator as taus  */
    ee->r = (gsl_rng *) gsl_rng_alloc(gsl_rng_taus);
-   /* get clock ticks since boot */
+   /* get clock ticks since boot                       */
    clk = times(&t);
-   /* get date & time */
+   /* get date & time                                  */
    time(&now);
    /* combine date, time, and ticks into a single UINT */
    dttk = (unsigned int) (now ^ (clk << 16));
-   /* allocate the GSL taus random number generator */
+   /* allocate the GSL taus random number generator    */
    ee->r = (gsl_rng *) gsl_rng_alloc(gsl_rng_taus);
-   /* initialize the GSL taus random number generator */
-   /* to date,time,#ticks */
+   /* initialize the GSL taus random number generator  */
+   /* to date,time,#ticks                              */
    gsl_rng_set(ee->r, dttk);
+
    /***************************************************/
    /* initialize the state array to random values     */
    /***************************************************/
@@ -79,8 +83,9 @@ eefmt *eeglinit(int states)
    stq = (unsigned int *) ee->state + ee->states;
    while (stp < stq)
       {
-      *stp++ = gsl_rng_get(ee->r);   /* set to random UINT */
+      *stp++ = gsl_rng_get(ee->r);     /* set to random UINT */
       } /* for each element in ee->state */
+
    /***************************************************/
    /* after this subroutine you may initialize the    */
    /* state array to your own values, if you wish     */

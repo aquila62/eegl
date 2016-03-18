@@ -1,11 +1,10 @@
-/* eegl.h - random number generator header file Version 1.0.0 */
-/* Copyright (C) 2016 aquila at github.com */
+/* tsteegl.c - Test eegl random number generator Version 1.0.0 */
+/* Copyright (C) 2016 aquila62 at github.com */
 
 /* This program is free software; you can redistribute it and/or */
 /* modify it under the terms of the GNU General Public License as */
 /* published by the Free Software Foundation; either version 2 of */
 /* the License, or (at your option) any later version. */
-
 /* This program is distributed in the hope that it will be useful, */
 /* but WITHOUT ANY WARRANTY; without even the implied warranty of */
 /* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the */
@@ -24,27 +23,31 @@
 /* application_notes/xapp052.pdf                        */
 /********************************************************/
 
-/* the following includes are used especially by the    */
-/* initialization routine                               */
-
 #include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <time.h>
-#include <sys/times.h>
-#include <math.h>
-#include <gsl/gsl_rng.h>
+#include "eegl.h"
 
-typedef struct eeglstruct {
-   int states;               /* number of states */
-   int ofst;                 /* offset into state array */
-   int out;                  /* output from the state */
-   unsigned int *state;      /* state array */
-   gsl_rng *r;               /* GSL RNG eg taus */
-   } eefmt;
+/* number of LFSR registers */
 
-eefmt *eeglinit(int states);           /* initialization routine */
-int eegl(eefmt *ee);                   /* random bit generator */
-double eeglunif(eefmt *ee);            /* random number 0-1 */
-int eeglint(eefmt *ee, int limit);     /* random integer 0-limit */
-unsigned int eeglpwr(eefmt *ee, int bits); /* random # 0-32 bits */
+#define STATES 1000
+
+/***************************************************/
+/* test the eegl random number generator with 1000 */
+/* LFSR registers                                  */
+/* generate 1000 random bits 0 or 1                */
+/***************************************************/
+
+int main(void)
+   {
+   int i;             /* loop counter */
+   eefmt *ee;         /* eegl structure */
+   ee = (eefmt *) eeglinit(STATES);    /* initialize eegl */
+   i = 1000;          /* set loop counter */
+   while (i--)        /* for each iteration of loop */
+      {
+      int j;          /* declare random bit */
+      j = eegl(ee);        /* generate random bit 0 or 1 */
+      printf("%d", j);     /* print random bit */
+      } /* for each bit generated */
+   printf("\n");      /* end of line at end of loop */
+   return(0);         /* normal eoj */
+   } /* main */
