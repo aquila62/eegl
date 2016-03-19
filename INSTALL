@@ -12,12 +12,11 @@ Next compile the programs.
 
 ./inst.sh
 
-Test eegl by running tsteegl.  There are no parameters.
-
-./tsteegl
-
-The output from tsteegl is a block of 1000 random bits.
-
 To de-install eegl:
 
 ./deinst.sh
+
+To see how to test eegl, read TESTING.
+Some of these test programs use new curses and X Windows.
+
+To read about the eegl generator, read README.eegl.
