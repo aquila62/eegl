@@ -2,7 +2,7 @@ Installing eegl:
 
 Be sure you have installed the GNU Scientific Library.
 
-apt-get install libgsl0-dev
+sudo apt-get install libgsl0-dev
 
 Make inst.sh and deinst.sh executable.
 
@@ -10,14 +10,14 @@ chmod 755 inst.sh deinst.sh
 
 Next compile the programs.
 
-inst.sh
+./inst.sh
 
 Test eegl by running tsteegl.  There are no parameters.
 
-tsteegl
+./tsteegl
 
 The output from tsteegl is a block of 1000 random bits.
 
 To de-install eegl:
 
-deinst.sh
+./deinst.sh
