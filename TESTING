@@ -1,0 +1,14 @@
+Test eegl by running tsteegl.  There are no parameters.
+
+./tsteegl
+
+The output from tsteegl is a block of 1000 random bits.
+
+Test eeglunif() and eeglint() by running tstnc.
+This test requires the new curses package.
+tstnc uses one parameter, the number of states.
+
+./tstnc 1000
+
+The output from tstnc is a random pattern of ASCII characters
+on a curses screen.  To quit press 'q'.
