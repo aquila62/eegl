@@ -30,7 +30,7 @@
 /* See eeglint.c for generating a random signed integer   */
 
 #include <gsl/gsl_rng.h>
-#include <eegl.h>
+#include "eegl.h"
 
 unsigned int eeglpwr(eefmt *ee, int bits)
    {
