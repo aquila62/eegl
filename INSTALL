@@ -6,7 +6,7 @@ sudo apt-get install libgsl0-dev
 
 Make inst.sh and deinst.sh executable.
 
-chmod 755 inst.sh deinst.sh
+chmod 755 inst.sh deinst.sh tstrwlk.sh
 
 Next compile the programs.
 
