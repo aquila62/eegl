@@ -28,15 +28,15 @@ on an X Windows screen.  To quit press 'q'.
 
 ------------------------------------------------------
 
-Random Walk Test:  tstrwlk.sh.
-tstrwlk.sh illustrates a random bit stream piped into a
+Random Walk Test:  tstwlk.sh.
+tstwlk.sh illustrates a random bit stream piped into a
 down stream program.
 This test requires X Windows.
-tstrwlk.sh uses one parameter, the number of states in eegl.
+tstwlk.sh uses one parameter, the number of states in eegl.
 
-./tstrwlk.sh 1000
+./tstwlk.sh 1000
 
-The output from tstrwlk.sh is a random walk relative to a midpoint
+The output from tstwlk.sh is a random walk relative to a midpoint
 line on an X Windows screen.  To quit press 'q'.
 
 There is one system bug in this program that needs to be fixed.

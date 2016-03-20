@@ -25,7 +25,7 @@
 #--------------------------------------------------------
 
 # this program feeds ranwlk.c
-# use tstrwlk.sh to test this program with ranwlk.c
+# use tstwlk.sh to test this program with ranwlk.c
 
 OBJ=eeglgen.o \
 	eeglinit.o \

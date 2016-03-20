@@ -21,7 +21,7 @@
 #     Boston, MA  02111-1307, USA.
 
 # See the eeglgen.c program for generating an input stream
-# Test with the tstrwlk.sh script
+# Test with the tstwlk.sh script
 
 OBJ=ranwlk.o
 

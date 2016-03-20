@@ -4,9 +4,9 @@ Be sure you have installed the GNU Scientific Library.
 
 sudo apt-get install libgsl0-dev
 
-Make inst.sh and deinst.sh executable.
+Make inst.sh and deinst.sh tstwlk.sh executable.
 
-chmod 755 inst.sh deinst.sh tstrwlk.sh
+chmod 755 inst.sh deinst.sh tstwlk.sh
 
 Next compile the programs.
 

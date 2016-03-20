@@ -23,7 +23,7 @@ along with this program; if not, write to:
 /* this program performs a random walk in X Windows */
 /* based on random input */
 /* eeglgen.c produces the input data through a pipe */
-/* use the tstrwlk.sh script to test this program with eeglgen */
+/* use the tstwlk.sh script to test this program with eeglgen */
 
 /* to define the escape key */
 #define XK_MISCELLANY 1
