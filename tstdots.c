@@ -224,7 +224,7 @@ void initx(xxfmt *xx)
 
    XSetWindowBorderWidth(xx->dpy, xx->w, 40);
 
-   sprintf(title,"Random Bitmap Screen");
+   sprintf(title,"Random Bitmap");
    XStoreName(xx->dpy,xx->w,title);
    XSetIconName(xx->dpy,xx->w,title);
 
