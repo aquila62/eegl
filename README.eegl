@@ -18,6 +18,8 @@ random number generator is not an issue.  The choice of 1000
 registers is arbitrary.  It could be 1 million registers on a
 large computer.
 
+Test results.
+
 The eegl random number generator has tested successfully with 
 1000 states in the following tests.
 
@@ -40,15 +42,29 @@ TestU01 incorporates the STS suite of tests into its own Crush
 suite.  Dieharder incorporates George Marsaglia's original diehard
 suite of tests.
 
-LFSR random number generators are known to fail linear correlation
-tests.  The matrix rank test is one of those tests that frequently
-fails with an LFSR RNG.  However, eegl passes these tests, perhaps
+LFSR random number generators are known to fail linear complexity
+tests.  The matrix rank test is one of test that frequently fails
+with an LFSR RNG.  However, eegl passes these tests, perhaps
 because it selects randomly from among 1000 LFSR registers.  I have
 run eegl tests that failed with 1 state but passed with 2-1000 states.
 
+Benchmarking.
+
 eegl performs at about 80% of the speed of the fastest RNGs in
 the GNU Scientific Library (GSL).  eegl performs twice as fast
-as the ranlux family of delux random number generators.
+as the ranlux family of delux random number generators.  These
+measurements were made with my own benchmarking program.
+
+When testing eeglraw as input to dieharder -g 200, be cautioned
+that the raw input feature of dieharder slows down the test.
+It is better to integrate eegl into dieharder as an internal
+random number generator in the 600 series of generators.
+
+The same is true with TestU01.  It is better to integrate eegl
+as an internal random number generator in order to speed up the
+test.
+
+Initialization.
 
 There is only one restriction in initializing 1000 states in eegl.
 An LFSR random number generator must be initialized to non zero
@@ -71,10 +87,14 @@ LFSR generator.  But having 1000 states in the generator circumvents
 this problem.  eegl passes linear correlation tests with 1000
 states.
 
+Distributed processing.
+
 eegl is conducive to running on a Beowulf style of supercomputer.
 Each of its 1000 LFSR registers may be manipulated independently
 in separate nodes.  I see no reason why eegl could not keep pace
 with the fastest supercomputer in a scientific experiment.
+
+Supporting subroutines.
 
 The eegl generator has three subroutines that depend on it.
 The calling program is responsible for passing valid parameters.
@@ -92,3 +112,11 @@ limit may be negative or positive.
 eeglpwr.c produces an unsigned integer of 1 to 32 bits.  It has
 two parameters, the eegl structure, and the number of bits.
 
+eeglgen.c produces an ASCII bit stream of zeroes and ones to stdout.
+
+eeglraw.c produces a raw stream of 32 bit unsigned integers to stdout.
+
+These last two programs are used to feed random data into down stream
+programs, such as the dieharder or STS suite of tests.
+
+See TESTING for more information.
