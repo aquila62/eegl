@@ -20,10 +20,11 @@ along with this program; if not, write to:
 	Boston, MA  02111-1307, USA.
 */
 
-/* this program performs a random walk in X Windows */
-/* based on random input */
-/* eeglgen.c produces the input data through a pipe */
+/* this program performs a random walk in X Windows           */
+/* based on random input                                      */
+/* eeglgen.c produces the input data through a pipe           */
 /* use the tstwlk.sh script to test this program with eeglgen */
+/* Press any key to quit                                      */
 
 /* to define the escape key */
 #define XK_MISCELLANY 1
@@ -101,6 +102,7 @@ void getkey(xxfmt *xx)
          } /* if keypress event */
       else if (e.type == Expose)
          {
+	 XClearWindow(xx->dpy,xx->w);
          } /* if expose event */
       } /* if event received */
    } /* getkey */
@@ -109,29 +111,25 @@ void getkey(xxfmt *xx)
 void ifkey(xxfmt *xx)
    {
    int msk;
-   int symbol;
    int XCheckMaskEvent();
    XEvent e;
-   XKeyEvent *k;
 
    msk = KeyPressMask|ExposureMask;
 
    XSelectInput(xx->dpy, xx->w, msk);
 
+   xx->runflg = 1;
+
    while (XCheckMaskEvent(xx->dpy, msk, &e))
       {
       if (e.type == KeyPress)
          {
-         k = (XKeyEvent *) &e;
-         symbol = XLookupKeysym(k,0);
-         if (symbol == XK_Escape
-	    || symbol == XK_q)
-            {
-            xx->runflg = 0;
-            } /* if quit */
+	 exit(0);
          } /* if keypress event */
       else if (e.type == Expose)
          {
+	 XClearWindow(xx->dpy,xx->w);
+	 return;
          } /* if expose event */
       } /* if event received */
    } /* ifkey */
