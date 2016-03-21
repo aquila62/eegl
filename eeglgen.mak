@@ -43,5 +43,11 @@ eeglgen:			$(OBJ)
 eeglgen.o:			eeglgen.c
 		$(CC) $(CFLAGS) eeglgen.c
 
+eeglinit.o:			eeglinit.c
+		$(CC) $(CFLAGS) eeglinit.c
+
+eegl.o:				eegl.c
+		$(CC) $(CFLAGS) eegl.c
+
 clean:
 		rm -f $(OBJ) eeglgen
