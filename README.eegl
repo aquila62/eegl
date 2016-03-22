@@ -120,3 +120,5 @@ These last two programs are used to feed random data into down stream
 programs, such as the dieharder or STS suite of tests.
 
 See TESTING for more information.
+
+The website for eegl is at aquila62.github.io.
