@@ -113,7 +113,7 @@ int main()
    /* create 5 random pick in main pool              */
    /**************************************************/
    pickp = (int *) pick;
-   pickq = (int *) pick + arr;;
+   pickq = (int *) pick + arr;
    while (pickp < pickq)
       {
       indx = eeglint(ee,enn)+1;
@@ -300,6 +300,9 @@ int main()
 	 addstr("q = quit");
 	 refresh();                /* refresh screen */
 	 round = 0.0;              /* reset round counter */
+         /**************************************************/
+         /* Test the keyboard for quit command             */
+         /**************************************************/
          ch = getch();      /* test keyboard for interrupt */
          /* quit if 'escape' or 'q' */
          if (ch == 0x1b) /* ESCAPE */
