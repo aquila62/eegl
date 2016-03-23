@@ -1,1 +1,0 @@
-Fix problem with malloc aborting in eeglgen when ranwlk ends.
