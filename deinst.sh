@@ -5,3 +5,4 @@ make -f tstdots.mak clean
 make -f eeglgen.mak clean
 make -f eeglraw.mak clean
 make -f ranwlk.mak clean
+make -f pwrball.mak clean

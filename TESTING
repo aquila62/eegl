@@ -54,6 +54,20 @@ line on an X Windows screen.  To quit press any key.
 
 ------------------------------------------------------
 
+Random Powerball Simulation:  pwrball
+pwrball is a random lottery game based on real odds
+and real pay-outs.
+This test requires new curses.  See apt-get above.
+
+./pwrball
+
+The output from pwrball shows money spent and money
+received for each prize level.  To quit press 'q'.
+The grand totals are in millions of dollars.
+The lesser prizes are in thousands of dollars.
+
+------------------------------------------------------
+
 Dieharder Test:  tstdie.sh
 Dieharder has to be installed first.
 
