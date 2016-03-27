@@ -1,0 +1,73 @@
+The java tests included here do not occur in dieharder or TestU01.
+To test eegl with dieharder or TestU01, feed the output from EeglGen
+into those test suites.  The bit2raw program converts the output of
+EeglGen into a format that the dieharder test can use.
+
+The java version of eegl runs about 1000 times slower than
+the C version, based on the timings in dieharder.
+
+------------------------------------------------------
+
+Test java eegl by running TstEegl.  There are no parameters.
+
+java TstEegl
+
+The output from TstEegl is a sample of the methods in
+Eegl/Eegl.java.
+
+------------------------------------------------------
+
+EeglSum test.
+
+There are no parameters.
+
+java EeglSum
+
+The output from tstsum.sh is a total of zero and one bits.
+Each total should be approximately 500,000.
+
+------------------------------------------------------
+
+Chi square test.
+
+There are no parameters.
+
+java EeglChi
+
+The output from tstchi.sh is a table of differences and
+a chi square total.
+
+If a test fails, repeat the test.  It should fail once in 10 tests
+on average.
+
+------------------------------------------------------
+
+Dieharder Test:  tstdie.sh
+Dieharder has to be installed first.
+
+sudo apt-get install libdieharder-dev
+sudo apt-get install dieharder
+
+tstdie.sh illustrates a raw stream of random data piped into a
+down stream test suite.
+
+./tstdie.sh
+
+The output from tstdie.sh is a statistical report.
+This is a long running test.  To shorten the test, only the
+birthday test is run with one p-value.
+
+------------------------------------------------------
+
+TestU01 is more difficult to run with the eegl generator.
+You have to download the TestU01 package and then compile it.
+Then you have to write and compile a test program in the
+examples directory of TestU01.  The short guide for TestU01
+gives you examples of how to set up a test.  In particular,
+you need to use ufile to read input from eeglraw in your test.
+After you get over the learning curve, you will be rewarded
+with some strong and varied tests.
+
+------------------------------------------------------
+
+The website for eegl is at https://aquila62.github.io.
