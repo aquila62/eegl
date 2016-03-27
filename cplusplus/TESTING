@@ -1,0 +1,64 @@
+The C++ tests included here do not occur in dieharder or
+TestU01.  Dieharder and TestU01 have a statistical version of
+the random walk test.  To test eegl with dieharder or TestU01,
+feed the output from eeglraw into those test suites.
+
+The C++ version of eegl runs about 12 times slower than
+the C version, based on the timings in dieharder.
+
+------------------------------------------------------
+
+Test C++ eegl by running tsteegl.  There are no parameters.
+
+./tsteegl
+
+The output from tsteegl is a sample of the methods in
+Eegl.cpp.
+
+------------------------------------------------------
+
+Random Walk Test:  tstwlk.sh
+This test requires X Windows.
+
+sudo apt-get install libx11-dev
+
+tstwlk.sh illustrates an ASCII stream of random data piped into
+a down stream test suite.  tstwlk.sh uses no parameter.  It is
+compiled with 1000 states.
+
+./tstwlk.sh
+
+The output from tstwlk.sh is a random walk relative to a midpoint
+line on an X Windows screen.  To quit press any key.
+
+------------------------------------------------------
+
+Dieharder Test:  tstdie.sh
+Dieharder has to be installed first.
+
+sudo apt-get install libdieharder-dev
+sudo apt-get install dieharder
+
+tstdie.sh illustrates a raw stream of random data piped into a
+down stream test suite.
+
+./tstdie.sh
+
+The output from tstdie.sh is a statistical report.
+This is a long running test.  To interrupt press CTRL-C.
+The first test takes half minute to print a report.
+
+------------------------------------------------------
+
+TestU01 is more difficult to run with the eegl generator.
+You have to download the TestU01 package and then compile it.
+Then you have to write and compile a test program in the
+examples directory of TestU01.  The short guide for TestU01
+gives you examples of how to set up a test.  In particular,
+you need to use ufile to read input from eeglraw in your test.
+After you get over the learning curve, you will be rewarded
+with some strong and varied tests.
+
+------------------------------------------------------
+
+The website for eegl is at https://aquila62.github.io.
