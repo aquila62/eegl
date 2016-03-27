@@ -1,0 +1,12 @@
+Make sure all python programs and shell scripts are executable.
+
+chmod 755 *.py *.sh
+
+eegl.py and eegl.pyc can be read/write only.
+
+Read TESTING to see how to test the python programs.
+
+To read more about the eegl random number generator, read
+README.eegl in the C repository of eegl.
+
+The website for eegl is at https://aquila62.github.io.
