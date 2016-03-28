@@ -25,6 +25,10 @@ Test programs:
 
 tsteegl.py samples the methods.  Run it several times.
 
+eeglchi.py calculates the chi square for 16384 numbers 0-15
+The chi square should range between 7.261 and 24.996
+90 percent of the time on average.
+
 tstsum.sh counts number of zeros and ones in a sample of
 1 million bits.
 
