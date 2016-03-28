@@ -17,6 +17,15 @@ Eegl.cpp.
 
 ------------------------------------------------------
 
+eegl chi square test.  There are no parameters.
+
+./eeglchi
+
+The output from tsteegl is a chi square report
+The chi square test fails 10% of the time on average.
+
+------------------------------------------------------
+
 Random Walk Test:  tstwlk.sh
 This test requires X Windows.
 
