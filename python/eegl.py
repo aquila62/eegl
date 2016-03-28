@@ -47,6 +47,8 @@ def eegl():
 	b3 = reg >> 10 & 1
 	b4 = reg & 1
 	out = b1 ^ b2 ^ b3 ^ b4
+	reg = (reg >> 1) | (out << 31)
+	state[i] = reg
 	return(out)
 
 def eeglunif():
