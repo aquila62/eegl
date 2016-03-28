@@ -13,6 +13,15 @@ The output from tsteegl is a block of 1000 random bits.
 
 ------------------------------------------------------
 
+eegl chi square test.  There are no parameters.
+
+./eeglchi
+
+The output from eeglchi is a chi square of 16384
+4-bit samples.  Number of degrees of freedom is 15.
+
+------------------------------------------------------
+
 Test eeglunif() and eeglint() by running tstnc.
 This test requires the new curses package.
 
