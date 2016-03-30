@@ -13,12 +13,29 @@ The output from tsteegl is a block of 1000 random bits.
 
 ------------------------------------------------------
 
-eegl chi square test.  There are no parameters.
+Uniform distribution chi square test.
+There are no parameters.
 
 ./eeglchi
 
 The output from eeglchi is a chi square of 16384
 4-bit samples.  Number of degrees of freedom is 15.
+
+------------------------------------------------------
+
+Binomial distribution chi square test.
+There are no parameters.
+
+./binom
+
+The output from binom is a chi square of 65536
+16-bit samples.  Number of degrees of freedom is 16.
+
+------------------------------------------------------
+
+The Anderson-Darling test for a normal distribution is
+not included in this repository, because it requires a
+statistical package, like R and the nortest library.
 
 ------------------------------------------------------
 
