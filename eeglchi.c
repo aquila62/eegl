@@ -72,11 +72,12 @@ int main()
    /****************/
    /* print report */
    /****************/
+   printf("Uniform Distribution Chi Square Test\n");
    printf("Total samples 16384\n");
    printf("Chi square %f\n", chisq);
    printf("15 degrees of freedom\n");
-   printf("Chi square at  5%c is  7.261\n", '%');
-   printf("Chi square at 95%c is 24.996\n", '%');
+   printf("95%c of the time, the chi square is "
+      "between 6.262 and 27.488\n", '%');
    free(ee->state);
    free(ee);
    return(0);            /* normal eoj */
