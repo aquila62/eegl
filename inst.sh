@@ -7,3 +7,4 @@ make -f eeglgen.mak
 make -f eeglraw.mak
 make -f ranwlk.mak
 make -f pwrball.mak
+make -f binom.mak

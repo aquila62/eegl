@@ -7,3 +7,4 @@ make -f eeglgen.mak clean
 make -f eeglraw.mak clean
 make -f ranwlk.mak clean
 make -f pwrball.mak clean
+make -f binom.mak clean
