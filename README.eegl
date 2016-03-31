@@ -1,13 +1,20 @@
 eegl is a random number generator (RNG) that produces bits in a
-uniform distribution.  eegl is based on 1 to 1000 linear feedback
-shift registers (LFSR), called states.  Each cycle of the generator
-uses a GNU Scientific Library (GSL) RNG, called taus, to select an
-LFSR at random.  The weaknesses of LFSR generators are eliminated by
-the random selection of one among many LFSR registers.  The number
-of LFSR registers does not affect the performance of the generator.
-The performance is the same, whether the generator uses 1 register
-or 1000 registers.  Using more than 1000 registers does not improve
-the generator's randomness to a significant extent.
+uniform distribution.  eegl is based on 1 to 1000 32-bit linear
+feedback shift registers (LFSR), called states.  eegl may also
+be implemented with LFSR registers of other sizes.  I have tested
+eegl with 24-bit LFSR registers, and it has performed just as well
+as the 32-bit version.  For the 24-bit version, see the eegl24
+repository.  This repository is called eegl, and it concerns the
+32-bit version of the generator.
+
+Each cycle of the generator uses a GNU Scientific Library (GSL) RNG,
+called taus, to select an LFSR at random.  The weaknesses of LFSR
+generators are eliminated by the random selection of one among many
+LFSR registers.  The number of LFSR registers does not affect the
+performance of the generator.  The performance is the same, whether
+the generator uses 1 register or 1000 registers.  Using more than
+1000 registers does not improve the generator's randomness to a
+significant extent.
 
 The period length of eegl depends on the number of LFSR registers.
 If 1000 registers are used, the period length is 2^32000 cycles.
