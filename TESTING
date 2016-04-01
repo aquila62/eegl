@@ -47,6 +47,33 @@ number of degrees of freedom, based on lambda.
 
 ------------------------------------------------------
 
+Normal distribution chi square test.
+There are three parameters, mean, standard deviation,
+and size of population.
+
+./normchi mean stdev size
+
+Example:
+
+./normchi 15.0 2.0 10000
+
+The output from normchi is the chi square with
+number of degrees of freedom.
+
+This test uses the Box-Muller Transform for converting
+a uniform random number, from 0 to 1, into a normal variate.
+The Box-Muller Transform uses the log, sine, and cosine
+functions.  As a result it is slower to calculate than
+a simple uniform random number.
+
+The chi square test fails at populations higher than 10000, 
+especially at a population size of 1000000.  The larger the
+population of the samples, the worse are the results.  I can't
+explain these errors, unless they are due to rounding and the
+complex transcendental functions used in the calculations.
+
+------------------------------------------------------
+
 The Anderson-Darling test for a normal distribution is
 not included in this repository, because it requires a
 statistical package, like R and the nortest library.
