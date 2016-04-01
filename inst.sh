@@ -4,7 +4,6 @@ make -f tstnc.mak
 make -f tstdots.mak
 make -f eeglchi.mak
 make -f poischi.mak
-make -f normchi.mak
 make -f eeglgen.mak
 make -f eeglraw.mak
 make -f ranwlk.mak
