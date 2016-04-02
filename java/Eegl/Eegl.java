@@ -15,9 +15,9 @@ import java.util.Random;
 public class Eegl {
    private int states;
    private int ofst;
-   private long out;
-   private long maxint = 0xffffff;
-   private long state[] = new long [2048];
+   private int out;
+   private int maxint = 0xffffff;
+   private int state[] = new int [2048];
    private Random rand = new Random();
 
    public Eegl(int startState)
@@ -32,13 +32,13 @@ public class Eegl {
 	 } // invalid # states
       for (i = 0; i < states; i++)
          {
-	 state[i] = (long) rand.nextInt() & maxint;
+	 state[i] = (int) rand.nextInt() & maxint;
 	 } // for each state
       } // constructor
 
    public int getBit()
       {
-      long tmp;
+      int tmp;
       ofst = (int) rand.nextInt(states);
       tmp = state[ofst];
       out = ((tmp >> 7) ^ (tmp >> 2)
