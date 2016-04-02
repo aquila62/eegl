@@ -25,9 +25,16 @@ Test programs:
 
 tsteegl.py samples the methods.  Run it several times.
 
-eeglchi.py calculates the chi square for 16384 numbers 0-15
-The chi square should range between 7.261 and 24.996
-90 percent of the time on average.
+eeglchi.py calculates the uniform distribution chi square
+for 16384 4-bit random numbers 0-15.
+The chi square should range between 6.262 and 27.488
+95 percent of the time on average.
+
+binom.py calculates the binomial distribution chi square
+for 65536 samples of 16 flips of a coin.  Expected values
+are based on Pascal's triangle for 2^16.
+The chi square should range between 6.908 and 28.845
+95 percent of the time on average.
 
 tstsum.sh counts number of zeros and ones in a sample of
 1 million bits.
