@@ -9,3 +9,5 @@ make -f eeglraw.mak clean
 make -f ranwlk.mak clean
 make -f pwrball.mak clean
 make -f binom.mak clean
+make -f mcpi.mak clean
+make -f eegltim.mak clean
