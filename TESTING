@@ -13,6 +13,28 @@ The output from tsteegl is a block of 1000 random bits.
 
 ------------------------------------------------------
 
+Monte Carlo Caculation of Pi/4.
+There are no parameters.
+
+./mcpi
+
+The output from mcpi is an approximation of Pi/4.
+Eegl is compared to GSL ranlxd2 for doing this
+calculation.
+
+------------------------------------------------------
+
+Benchmark timer for the eegl random number generator.
+There are no parameters.
+
+./eegltim
+
+The output from eegltim is a comparison between
+the eegl random number generator, GSL taus2,
+and GSL ranlxd2.
+
+------------------------------------------------------
+
 Uniform distribution chi square test.
 There are no parameters.
 
