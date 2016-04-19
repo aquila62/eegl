@@ -37,10 +37,16 @@
 
 typedef struct eeglstruct {
    int states;               /* number of states */
+   unsigned int s1;          /* taus state s1 */
+   unsigned int s2;          /* taus state s2 */
+   unsigned int s3;          /* taus state s3 */
    int ofst;                 /* offset into state array */
-   int out;                  /* output from the state */
+   int out;                  /* current output from the state */
+   int prev;                 /* prev output */
+   int pprev;                /* prev prev output */
+   int bitofst;              /* offset into bit array */
    unsigned int *state;      /* state array */
-   gsl_rng *r;               /* GSL RNG eg taus */
+   unsigned char *bit;       /* bit array */
    } eefmt;
 
 eefmt *eeglinit(int states);           /* initialization routine */
