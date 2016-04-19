@@ -1,4 +1,4 @@
-/* eeglinit.c - random number generator initialization Version 1.0.0 */
+/* eeglinit.c - eegl RNG initialization Version 1.0.0                */
 /* Copyright (C) 2016 aquila62 at github.com                         */
 
 /* This program is free software; you can redistribute it and/or     */
@@ -25,18 +25,27 @@
 /********************************************************/
 
 /* This initialization routine is based on date/time/ticks */
+/* RNG is an acronym for random number generator */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <time.h>
+#include <sys/times.h>
+#include <math.h>
 #include <gsl/gsl_rng.h>
 #include "eegl.h"
 
 eefmt *eeglinit(int states)
    {
    unsigned int dttk;          /* combined date and #ticks */
-   unsigned int *stp,*stq;     /* pointer into state array */
+   unsigned int *stp,*stq;     /* pointers into state array */
+   unsigned char *p,*q;        /* pointers into bit array */
    time_t now;                 /* current date and time */
    clock_t clk;                /* current number of ticks */
    struct tms t;               /* structure used by times() */
    eefmt *ee;                  /* eegl structure */
+   gsl_rng *r;                 /* GSL RNG structure */
 
    /***************************************************/
    /* allocate memory for eegl structure */
@@ -51,30 +60,40 @@ eefmt *eeglinit(int states)
    ee->states = states; /* save the number of LFSR registers */
 
    /***************************************************/
-   /* allocate memory for eegl state array */
+   /* allocate memory for eegl state array            */
    /***************************************************/
    ee->state = (unsigned int *)
-   malloc(sizeof(unsigned int)*ee->states);
+      malloc(sizeof(unsigned int)*ee->states);
    if (ee->state == NULL)
       {
-      fprintf(stderr,"initeegl: out of memory "
+      fprintf(stderr,"eeglinit: out of memory "
       "allocating ee->state\n");
       exit(1);
       } /* out of memory */
 
-   /* declare the GSL random number generator as taus  */
-   ee->r = (gsl_rng *) gsl_rng_alloc(gsl_rng_taus);
+   /***************************************************/
+   /* allocate memory for eegl bit array              */
+   /***************************************************/
+   ee->bit = (unsigned char *)
+      malloc(sizeof(unsigned char) * 1024);
+   if (ee->bit == NULL)
+      {
+      fprintf(stderr,"eeglinit: out of memory "
+      "allocating ee->bit\n");
+      exit(1);
+      } /* out of memory */
+
+   /* declare the GSL random number generator as taus2 */
+   r = (gsl_rng *) gsl_rng_alloc(gsl_rng_taus2);
    /* get clock ticks since boot                       */
    clk = times(&t);
    /* get date & time                                  */
    time(&now);
    /* combine date, time, and ticks into a single UINT */
-   dttk = (unsigned int) (now ^ (clk << 16));
-   /* allocate the GSL taus random number generator    */
-   ee->r = (gsl_rng *) gsl_rng_alloc(gsl_rng_taus);
-   /* initialize the GSL taus random number generator  */
+   dttk = (unsigned int) (now ^ clk);
+   /* initialize the GSL taus2 random number generator */
    /* to date,time,#ticks                              */
-   gsl_rng_set(ee->r, dttk);
+   gsl_rng_set(r, dttk);
 
    /***************************************************/
    /* initialize the state array to random values     */
@@ -83,15 +102,33 @@ eefmt *eeglinit(int states)
    stq = (unsigned int *) ee->state + ee->states;
    while (stp < stq)
       {
-      *stp++ = gsl_rng_get(ee->r);     /* set to random UINT */
+      *stp++ = gsl_rng_get(r);     /* set to random UINT */
       } /* for each element in ee->state */
+
+   /***************************************************/
+   /* initialize the bit array to random values       */
+   /***************************************************/
+   p = (unsigned char *) ee->bit;
+   q = (unsigned char *) ee->bit + 1024;
+   while (p < q)
+      {
+      *p++ = gsl_rng_uniform_int(r,2);   /* set to random bit */
+      } /* for each element in ee->bit */
+
+   /***************************************************/
+   /* initialize the bit array to random values       */
+   /* these three fields are backed up in eegl()      */
+   /***************************************************/
+   ee->pprev = gsl_rng_uniform_int(r,2);   /* set to random bit */
+   ee->prev  = gsl_rng_uniform_int(r,2);   /* set to random bit */
+   ee->out   = gsl_rng_uniform_int(r,2);   /* set to random bit */
 
    /***************************************************/
    /* after this subroutine you may initialize the    */
    /* state array to your own values, if you wish     */
    /* to do regression testing.                       */
-   /* Use the above 6 lines as an example of how to   */
-   /* initialize the array                            */
+   /* Use the above 9 instructions as an example of   */
+   /* how to initialize the array                     */
    /***************************************************/
    /* return the eegl structure                       */
    /***************************************************/
