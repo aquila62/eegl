@@ -2,10 +2,11 @@ eegl is a random number generator (RNG) that produces single bits
 in a uniform distribution.  eegl is based on 1 to 1000 32-bit linear
 feedback shift registers (LFSR), called states.  eegl may also
 be implemented with LFSR registers of other sizes.  I have tested
-eegl with 24-bit LFSR registers, and it has performed just as well
-as the 32-bit version.  For the 24-bit version, see the eegl24
-repository.  This repository is called eegl, and it concerns the
-32-bit LFSR generator.
+eegl with 24-bit LFSR registers and 5-bit registers, and it has
+performed just as well as the 32-bit version.  For the 24-bit
+version, see the eegl24 repository.  For the 5-bit version,
+see the Bays_Durham_Shuffle repository.  This repository is called
+eegl, and it concerns the 32-bit LFSR generator.
 
 Each cycle of the generator uses the taus randomizing algorithm,
 to select an LFSR at random.  The weaknesses of LFSR generators
