@@ -27,20 +27,17 @@
 #include <stdio.h>
 #include "eegl.h"
 
-/* number of LFSR states */
-#define STATES 1000
-
 int main()
    {
    int i;                         /* loop counter */
    double *p,*q;                  /* pointers to tally array */
    double tally[32];              /* chi square counts */
-   double expected = 1024.0;      /* expected chi square count */
+   double expected = 4096.0;      /* expected chi square count */
    double diff;                   /* expected - actual count */
    double diffsq;                 /* difference squared */
    double chisq = 0.0;            /* chi square total */
    eefmt *ee;                     /* Eegl structure */
-   ee = (eefmt *) eeglinit(STATES);
+   ee = (eefmt *) eeglinit();
    /**********************************/
    /* initialize tally array to zero */
    /**********************************/
@@ -48,9 +45,9 @@ int main()
    q = (double *) tally + 32;
    while (p < q) *p++ = 0.0;
    /********************************************/
-   /* tally 16384 4-bit samples in 16 counters */
+   /* tally 65536 4-bit samples in 16 counters */
    /********************************************/
-   i = 16384;
+   i = 65536;
    while (i--)
       {
       int indx;
@@ -73,7 +70,7 @@ int main()
    /* print report */
    /****************/
    printf("Uniform Distribution Chi Square Test\n");
-   printf("Total samples 16384\n");
+   printf("Total samples 65536\n");
    printf("Chi square %f\n", chisq);
    printf("15 degrees of freedom\n");
    printf("95%c of the time, the chi square is "

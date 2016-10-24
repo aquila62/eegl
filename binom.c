@@ -77,7 +77,7 @@ int main()
    /*********************************************************/
    /* initialize the eegl generator                         */
    /*********************************************************/
-   ee = (eefmt *) eeglinit(1000);
+   ee = (eefmt *) eeglinit();
    /*********************************************************/
    /* Count actual number of heads                          */
    /*********************************************************/
@@ -90,7 +90,7 @@ int main()
       j = 16;          /* set loop counter                   */
       while (j--)
          {
-	 if (eegl(ee)) tothd++;    /* tally #heads in tuple */
+	 if (eeglbit(ee)) tothd++;     /* tally #heads in tuple  */
 	 } /* for each flip */
       p = (double *) actual + tothd;   /* point to correct total */
       *p += 1.0;                   /* tally n # of heads */

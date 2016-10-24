@@ -28,10 +28,8 @@
 
 /* number of LFSR registers */
 
-#define STATES 1000
-
 /***************************************************/
-/* test the eegl random number generator with 1000 */
+/* test the eegl random number generator with 1024 */
 /* LFSR registers                                  */
 /* generate 1000 random bits 0 or 1                */
 /***************************************************/
@@ -40,12 +38,12 @@ int main(void)
    {
    int i;             /* loop counter */
    eefmt *ee;         /* eegl structure */
-   ee = (eefmt *) eeglinit(STATES);    /* initialize eegl */
+   ee = (eefmt *) eeglinit();       /* initialize eegl */
    i = 1000;          /* set loop counter */
    while (i--)        /* for each iteration of loop */
       {
       int j;          /* declare random bit */
-      j = eegl(ee);        /* generate random bit 0 or 1 */
+      j = eeglbit(ee);     /* generate random bit 0 or 1 */
       printf("%d", j);     /* print random bit */
       } /* for each bit generated */
    printf("\n");      /* end of line at end of loop */

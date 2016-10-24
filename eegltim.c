@@ -28,7 +28,7 @@
 #include <gsl/gsl_rng.h>
 #include "eegl.h"
 
-#define STATES 1000
+#define COUNT (10000000.0)
 
 int main(void)
    {
@@ -42,7 +42,7 @@ int main(void)
    struct tms t;
    eefmt *ee;
    gsl_rng *r;
-   ee = (eefmt *) eeglinit(STATES);
+   ee = (eefmt *) eeglinit();
    /**************************************************/
    count = 0.0;
    start = times(&t);       /* get ticks */
@@ -50,7 +50,7 @@ int main(void)
       {
       eegl(ee);
       count += 1.0;
-      if (count >= 100000000.0)
+      if (count >= COUNT)
          {
          fin = times(&t);
 	 elap = (fin - start); 
@@ -83,7 +83,7 @@ int main(void)
       {
       gsl_rng_get(r);
       count += 1.0;
-      if (count >= 100000000.0)
+      if (count >= COUNT)
          {
          fin = times(&t);
 	 elap = (fin - start); 
@@ -117,7 +117,7 @@ int main(void)
       {
       gsl_rng_uniform(r);
       count += 1.0;
-      if (count >= 100000000.0)
+      if (count >= COUNT)
          {
          fin = times(&t);
 	 elap = (fin - start); 

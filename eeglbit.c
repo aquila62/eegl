@@ -1,4 +1,4 @@
-/* eeglint.c - generate a random number integer Version 1.0.0        */
+/* eeglbit.c - random number generator Version 1.0.0                 */
 /* Copyright (C) 2016 aquila62 at github.com                         */
 
 /* This program is free software; you can redistribute it and/or     */
@@ -24,18 +24,22 @@
 /* application_notes/xapp052.pdf                        */
 /********************************************************/
 
-/* this subroutine generates a random integer from zero */
-/* up to a limit                                        */
-/* the limit may be positive or negative                */
-/* For performance reasons, the input parameter is not  */
-/* validated                                            */
-/* See eeglpwr.c for generating an unsigned integer     */
+/* this subroutine generates a random bit                 */
 
 #include "eegl.h"
 
-int eeglint(eefmt *ee, int limit)
+int eeglbit(eefmt *ee)
    {
-   unsigned int intgr;               /* output integer */
-   intgr = (unsigned int) eegl(ee) % limit;
-   return(intgr);           /* return the integer */
-   } /* eeglint */
+   int i;
+   int bit;                 /* random bit output */
+   unsigned int lfsr;
+   i = 32;
+   bit = 0;
+   lfsr = eegl(ee);
+   while (i--)
+      {
+      bit ^= lfsr;
+      lfsr >>= 1;
+      } /* for each bit in ee->lfsr */
+   return(bit & 1);         /* return random bit */
+   } /* eeglbit */

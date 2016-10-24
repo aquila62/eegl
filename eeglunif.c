@@ -27,25 +27,15 @@
 /* this subroutine produces a uniform random number     */
 /* from zero to one                                     */
 
-#define BITS 53
+#define MAXINT (4294967296.0)
 
-#include <gsl/gsl_rng.h>
 #include "eegl.h"
 
 double eeglunif(eefmt *ee)
    {
-   int i;                  /* loop counter for # of bits */
-   double num;             /* random number from 0-1     */
-   num = 0.0;              /* initialize output          */
-   i = BITS;               /* set loop counter           */
-   /* the uniform random number is shifted 1 bit to the right */
-   /* then a zero or one bit is added as the high order bit   */
-   /* in the mantissa.                                        */
-   /* This is repeated 53 times for a 53 bit mantissa         */
-   while (i--)             /* mantissa loop              */
-      {
-      if (eegl(ee)) num = (num * 0.5) + 0.5;    /* if one bit */
-      else num *= 0.5;                          /* else zero bit */
-      } /* for each bit in mantissa */
-   return(num);            /* return uniform random number */
+   double num;             /* random number from 0 up to 2^32 */
+   double frac;            /* random number from 0-1     */
+   num  = (double) eegl(ee);
+   frac = num / MAXINT;
+   return(frac);           /* return uniform random number */
    } /* eeglunif */

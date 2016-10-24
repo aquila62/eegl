@@ -29,20 +29,11 @@
 /* For performance reasons the parameter is not validated */
 /* See eeglint.c for generating a random signed integer   */
 
-#include <gsl/gsl_rng.h>
 #include "eegl.h"
 
 unsigned int eeglpwr(eefmt *ee, int bits)
    {
-   int i;                   /* loop counter */
    unsigned int intgr;      /* output UINT */
-   intgr = 0;               /* initialize the output UINT */
-   i = bits;                /* set the loop counter */
-   /* to produce the UINT, shift the UINT one bit to the left */
-   /* and add a zero or one to the low order bit              */
-   while (i--)              /* UINT loop */
-      {
-      intgr = (intgr << 1) | eegl(ee);   /* see above comment */
-      } /* for each bit in intgr */
+   intgr = (unsigned int) eegl(ee) >> (32 - bits);
    return(intgr);           /* return random unsigned integer */
    } /* eeglpwr */

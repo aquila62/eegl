@@ -36,8 +36,6 @@
 #include <gsl/gsl_rng.h>
 #include "eegl.h"
 
-#define STATES 1024
-
 int main(void)
    {
    int i;                     /* loop counter                 */
@@ -56,7 +54,7 @@ int main(void)
    struct tms t;              /* structure used by times()    */
    gsl_rng *r;                /* GSL RNG structure            */
    eefmt *ee;                 /* eegl structure               */
-   ee = (eefmt *) eeglinit(STATES);   /* initialize the eegl structure */
+   ee = (eefmt *) eeglinit();      /* initialize the eegl structure */
    bot = 1000000.0;           /* set to one million           */
    /************************************************************/
    tot = 0.0;                 /* initialize total points in a circle */

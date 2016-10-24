@@ -33,7 +33,7 @@ CC=gcc
 
 CFLAGS=-c -Wall -O2
 
-LDFLAGS=-lgsl -lgslcblas -lm
+LDFLAGS=
 
 eeglchi:			$(OBJ)
 		$(CC) -Wall -O2 $(OBJ) -o eeglchi $(LDFLAGS)

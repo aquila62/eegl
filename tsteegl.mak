@@ -26,13 +26,14 @@
 
 OBJ=tsteegl.o \
 	eeglinit.o \
-	eegl.o
+	eegl.o \
+	eeglbit.o
 
 CC=gcc
 
 CFLAGS=-c -Wall -O2
 
-LDFLAGS=-lgsl -lgslcblas -lm
+LDFLAGS=
 
 tsteegl:			$(OBJ)
 		$(CC) -Wall -O2 $(OBJ) -o tsteegl $(LDFLAGS)
@@ -45,6 +46,9 @@ eeglinit.o:			eeglinit.c
 
 eegl.o:				eegl.c
 		$(CC) $(CFLAGS) eegl.c
+
+eeglbit.o:			eeglbit.c
+		$(CC) $(CFLAGS) eeglbit.c
 
 clean:
 		rm -f $(OBJ) tsteegl

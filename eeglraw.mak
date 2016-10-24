@@ -36,7 +36,7 @@ CC=gcc
 
 CFLAGS=-c -Wall -O2
 
-LDFLAGS=-lgsl -lgslcblas -lm
+LDFLAGS=
 
 eeglraw:			$(OBJ)
 		$(CC) -Wall -O2 $(OBJ) -o eeglraw $(LDFLAGS)
