@@ -34,18 +34,6 @@
 #include <gsl/gsl_rng.h>
 #include "eegl.h"
 
-/* number of LFSR registers in the eegl generator */
-#define STATES 1000
-
-/* print syntax */
-void putstx(char *pgm)
-   {
-   fprintf(stderr,"Usage: %s #states\n", pgm);
-   fprintf(stderr,"Example: %s 1000\n", pgm);
-   fprintf(stderr,"In this example, %s has 1000 states\n", pgm);
-   exit(1);
-   } /* putstx */
-
 /* write one million bytes to stdout */
 void putblk(unsigned char *blk, int len)
    {
@@ -58,29 +46,13 @@ void putblk(unsigned char *blk, int len)
       } /* write error */
    } /* putblk */
 
-int main(int argc, char **argv)
+int main()
    {
-   int states;          /* number of LFSR registers in the eegl generator */
    unsigned int i;           /* output block length counter */
    unsigned char *p;         /* pointer to the output block */
    unsigned char *blk;       /* output bit stream */
    eefmt *ee;           /* eegl structure */
-   if (argc != 2) putstx(*argv);      /* must have one parameter */
-   states = atoi(*(argv+1));          /* convert parameter to integer */
-   /* validate input parameter */
-   if (states < 1)
-      {
-      fprintf(stderr,"main: parameter #states %s "
-         "is too small\n", *(argv+1));
-      putstx(*argv);
-      } /* states is too small */
-   if (states > STATES)
-      {
-      fprintf(stderr,"main: parameter #states %s "
-         "is too large\n", *(argv+1));
-      putstx(*argv);
-      } /* states is too large */
-   ee = (eefmt *) eeglinit(states);    /* initialize eegl generator */
+   ee = (eefmt *) eeglinit();        /* initialize eegl generator */
    /***************************************/
    /* allocate memory for the output      */
    /* bit stream                          */
@@ -102,7 +74,8 @@ int main(int argc, char **argv)
       {
       i++;           /* counter for block length */
       /* append a random byte to the end of the output block */
-      *p++ = (unsigned char) eeglpwr(ee,8);
+      *p++ = (unsigned char) (eegl(ee) & 255);
+      // *p++ = (unsigned char) eeglpwr(ee,8);
       if (i >= 1048576)       /* if output block is filled */
          {
          putblk(blk,i);       /* write output block to stdout */

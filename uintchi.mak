@@ -1,4 +1,4 @@
-#  pwrball.mak - Compile pwrball.c Version 1.0.0
+#  uintchi.mak - Compile uintchi.c Version 1.0.0
 #  Copyright (C) 2016 aquila62 at github.com
 
 #  This program is free software; you can redistribute it and/or
@@ -18,29 +18,22 @@
    #  59 Temple Place - Suite 330
    #  Boston, MA 02111-1307, USA.
 
-#--------------------------------------------------------
-#  The LFSR in this generator comes from the following
-#  website http://www.xilinx.com/support/documentation/
-#  application_notes/xapp052.pdf
-#--------------------------------------------------------
-
-OBJ=pwrball.o \
+OBJ=uintchi.o \
 	eeglinit.o \
 	eegl.o \
-	eeglunif.o \
-	eeglint.o
+	eeglpwr.o
 
 CC=gcc
 
 CFLAGS=-c -Wall -O2
 
-LDFLAGS=-lncurses
+LDFLAGS=
 
-pwrball:			$(OBJ)
-		$(CC) -Wall -O2 $(OBJ) -o pwrball $(LDFLAGS)
+uintchi:			$(OBJ)
+		$(CC) -Wall -O2 $(OBJ) -o uintchi $(LDFLAGS)
 
-pwrball.o:			pwrball.c
-		$(CC) $(CFLAGS) pwrball.c
+uintchi.o:			uintchi.c
+		$(CC) $(CFLAGS) uintchi.c
 
 eeglinit.o:			eeglinit.c
 		$(CC) $(CFLAGS) eeglinit.c
@@ -48,11 +41,8 @@ eeglinit.o:			eeglinit.c
 eegl.o:				eegl.c
 		$(CC) $(CFLAGS) eegl.c
 
-eeglunif.o:			eeglunif.c
-		$(CC) $(CFLAGS) eeglunif.c
-
-eeglint.o:			eeglint.c
-		$(CC) $(CFLAGS) eeglint.c
+eeglpwr.o:			eeglpwr.c
+		$(CC) $(CFLAGS) eeglpwr.c
 
 clean:
-		rm -f $(OBJ) pwrball
+		rm -f $(OBJ) uintchi

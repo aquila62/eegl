@@ -32,17 +32,14 @@
 /* long to be tested in practice.                       */
 /********************************************************/
 
-#include <math.h>
 #include "eegl.h"
 
-#define MAXINT 4294967296.0
+#define MAXINT (4294967296.0)
 
-int eegl(eefmt *ee)
+unsigned int eegl(eefmt *ee)
    {
-   int tmp;                /* used by Bays-Durham shuffle  */
-   double num;             /* uniform number 0-1           */
+   unsigned int tmp;       /* used by Bays-Durham shuffle  */
    unsigned int *stp;      /* state array pointer          */
-   unsigned char *p;       /* bit array pointer            */
    /********************************************************/
    /* this LFSR is 32 bits                                 */
    /* this is 32 22 2 1 counting from the left at one      */
@@ -53,46 +50,36 @@ int eegl(eefmt *ee)
    /* the period length is 4 billion, or 2^32-1, cycles    */
    /* for this 32-bit single LFSR register                 */
    /* It uses a random 32 bit number (non-zero) for a seed */
-   /* When combined with 1000 states, the period length    */
-   /* is 2^32000                                           */
+   /* When combined with 1024 states, the period length    */
+   /* is approximately 5.41e2639                           */
+   /********************************************************/
+   /* select one out of 1024 states                        */
+   /* calculate offset using the top 10 bits               */
+   /********************************************************/
+   ee->ofst = (ee->pprev >> 22);
    /********************************************************/
    /* back up the previous two results                     */
    /********************************************************/
    ee->pprev = ee->prev;   /* prev prev <== prev           */
-   ee->prev  = ee->out;    /* prev <== out                 */
+   ee->prev  = ee->lfsr;   /* prev <== lfsr                */
    /********************************************************/
-   /* select one out of 1000 states                        */
-   /* calculate offset using the taus algorithm            */
+   /* calculate one lfsr cycle                             */
    /********************************************************/
-   ee->s1 = (((ee->s1&0xfffffffe)<<12)
-      ^(((ee->s1<<13)^ee->s1)>>19));
-   ee->s2 = (((ee->s2&0xfffffff8)<< 4)
-      ^(((ee->s2<< 2)^ee->s2)>>25));
-   ee->s3 = (((ee->s3&0xfffffff0)<<17)
-      ^(((ee->s3<< 3)^ee->s3)>>11));
-   num = (double) (ee->s1 ^ ee->s2 ^ ee->s3) / MAXINT;
-   ee->ofst = (int) floor(num * (double) ee->states);
+   LFSR;
+   /********************************************************/
    /* point to the state selected                          */
+   /********************************************************/
    stp = (unsigned int *) ee->state + ee->ofst;
-   /* calculate a new LFSR by xor'ing the taps             */
-   ee->out = ((*stp >> 31) ^ (*stp >> 30)
-      ^ (*stp >> 10) ^ (*stp >> 0)) & 1;
-   /* and rolling the LFSR right                           */
-   *stp = ((*stp >> 1) | (ee->out << 31));
    /********************************************************/
    /* Bays-Durham shuffle                                  */
-   /* calculate random offset into the bit array           */
+   /* Swap current LFSR with random entry into the         */
+   /* state array.                                         */
    /********************************************************/
-   ee->bitofst = (int) floor(num * 1024.0);
-   /* point to random bit array element                    */
-   p = (unsigned char *) ee->bit + ee->bitofst;
-   /* swap current output with the random member of the    */
-   /* bit array                                            */
-   tmp = (int) *p;
-   *p  = (unsigned char) ee->out;
-   ee->out = tmp;
+   tmp  = (unsigned int) *stp;
+   *stp = (unsigned int) ee->lfsr;
+   ee->lfsr = tmp;
    /********************************************************/
    /* return the output of the Bays-Durham shuffle         */
    /********************************************************/
-   return((int) ee->out);
+   return(ee->lfsr ^ ee->prev ^ ee->pprev);
    } /* eegl subroutine */

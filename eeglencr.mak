@@ -1,4 +1,4 @@
-#  pwrball.mak - Compile pwrball.c Version 1.0.0
+#  eeglencr.mak - Compile eeglencr.c Version 1.0.0
 #  Copyright (C) 2016 aquila62 at github.com
 
 #  This program is free software; you can redistribute it and/or
@@ -18,29 +18,23 @@
    #  59 Temple Place - Suite 330
    #  Boston, MA 02111-1307, USA.
 
-#--------------------------------------------------------
-#  The LFSR in this generator comes from the following
-#  website http://www.xilinx.com/support/documentation/
-#  application_notes/xapp052.pdf
-#--------------------------------------------------------
-
-OBJ=pwrball.o \
+OBJ=eeglencr.o \
 	eeglinit.o \
 	eegl.o \
-	eeglunif.o \
-	eeglint.o
+	eeglpwr.o \
+	eeglbit.o
 
 CC=gcc
 
 CFLAGS=-c -Wall -O2
 
-LDFLAGS=-lncurses
+LDFLAGS=
 
-pwrball:			$(OBJ)
-		$(CC) -Wall -O2 $(OBJ) -o pwrball $(LDFLAGS)
+eeglencr:			$(OBJ)
+		$(CC) -Wall -O2 $(OBJ) -o eeglencr $(LDFLAGS)
 
-pwrball.o:			pwrball.c
-		$(CC) $(CFLAGS) pwrball.c
+eeglencr.o:			eeglencr.c
+		$(CC) $(CFLAGS) eeglencr.c
 
 eeglinit.o:			eeglinit.c
 		$(CC) $(CFLAGS) eeglinit.c
@@ -48,11 +42,11 @@ eeglinit.o:			eeglinit.c
 eegl.o:				eegl.c
 		$(CC) $(CFLAGS) eegl.c
 
-eeglunif.o:			eeglunif.c
-		$(CC) $(CFLAGS) eeglunif.c
+eeglpwr.o:			eeglpwr.c
+		$(CC) $(CFLAGS) eeglpwr.c
 
-eeglint.o:			eeglint.c
-		$(CC) $(CFLAGS) eeglint.c
+eeglbit.o:			eeglbit.c
+		$(CC) $(CFLAGS) eeglbit.c
 
 clean:
-		rm -f $(OBJ) pwrball
+		rm -f $(OBJ) eeglencr

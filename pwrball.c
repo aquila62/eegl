@@ -25,7 +25,6 @@
 /********************************************************/
 
 #include <curses.h>
-#include <gsl/gsl_rng.h>
 #include "eegl.h"
 
 /* This program is based on the powerball calculator at */
@@ -36,9 +35,6 @@
 /* the pick in this program is like a quick pick */
 /* one quick pick is chosen at random and played against */
 /* an infinite number of drawings, or until the quit key is pressed */
-
-/* number of LFSR registers in eegl generator */
-#define STATES 1000
 
 /* initialize curses */
 void initcrss()
@@ -91,7 +87,7 @@ int main()
    char mainpool[128];
    char maindraw[128];
    char bonuspool[64];
-   ee = (eefmt *) eeglinit(STATES);   /* initialize eegl generator */
+   ee = (eefmt *) eeglinit();      /* initialize eegl generator */
    initcrss();                        /* initialize curses */
    enn = 69;              /* #balls in main pool         */
    arr = 5;               /* #balls drawn from main pool */

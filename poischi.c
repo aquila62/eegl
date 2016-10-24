@@ -28,11 +28,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
-#include <gsl/gsl_rng.h>
 #include <gsl/gsl_cdf.h>
 #include "eegl.h"
-
-#define STATES 1000
 
 typedef struct xxstruct {
    int lambda;
@@ -210,7 +207,7 @@ int main(int argc, char **argv)
       exit(1);
       } /* sz too large */
    /* initialize the random number generator */
-   xx->ee     = (eefmt *) eeglinit(STATES);
+   xx->ee     = (eefmt *) eeglinit();
    xx->bigell = exp(-xx->lambda);
    xx->enn    = (double) xx->sz;   /* size of the population */
    bldetbl(xx);     /* create the expected table */

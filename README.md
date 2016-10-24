@@ -1,5 +1,8 @@
 # eegl
-Random Number Generator using 1000 linear feedback shift registers.
+Random Number Generator using 1024 linear feedback shift registers.
+The period length of this RNG is extended by using a Bays-Durham
+shuffle.  The weaknesses of an LFSR generator are overcome by
+using the Bays-Durham shuffle.
 
 Read INSTALL, TESTING, and README.eegl.
 

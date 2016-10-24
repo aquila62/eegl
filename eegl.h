@@ -32,25 +32,29 @@
 #include <unistd.h>
 #include <time.h>
 #include <sys/times.h>
-#include <math.h>
-#include <gsl/gsl_rng.h>
 
 typedef struct eeglstruct {
    int states;               /* number of states */
-   unsigned int s1;          /* taus state s1 */
-   unsigned int s2;          /* taus state s2 */
-   unsigned int s3;          /* taus state s3 */
    int ofst;                 /* offset into state array */
-   int out;                  /* current output from the state */
-   int prev;                 /* prev output */
-   int pprev;                /* prev prev output */
-   int bitofst;              /* offset into bit array */
+   int out;                  /* current output from the LFSR */
+   unsigned int lfsr;        /* linear feedback shift register */
+   unsigned int prev;        /* prev LFSR */
+   unsigned int pprev;       /* prev prev LFSR */
    unsigned int *state;      /* state array */
-   unsigned char *bit;       /* bit array */
    } eefmt;
 
-eefmt *eeglinit(int states);           /* initialization routine */
-int eegl(eefmt *ee);                   /* random bit generator */
+#define LFSROUT (ee->out = (((ee->lfsr >> 31) \
+   ^ (ee->lfsr >> 30) \
+   ^ (ee->lfsr >> 10) \
+   ^ (ee->lfsr >> 0)) & 1))
+
+#define LFSRROLL (ee->lfsr = ((ee->lfsr >> 1) | (ee->out << 31)))
+
+#define LFSR (LFSROUT,LFSRROLL)
+
+eefmt *eeglinit(void);                 /* initialization routine */
+unsigned int eegl(eefmt *ee);          /* random bit generator */
 double eeglunif(eefmt *ee);            /* random number 0-1 */
 int eeglint(eefmt *ee, int limit);     /* random integer 0-limit */
 unsigned int eeglpwr(eefmt *ee, int bits); /* random # 0-32 bits */
+int eeglbit(eefmt *ee);                /* random bit */

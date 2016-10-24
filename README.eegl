@@ -1,32 +1,39 @@
-eegl is a random number generator (RNG) that produces single bits
-in a uniform distribution.  eegl is based on 1 to 1000 32-bit linear
-feedback shift registers (LFSR), called states.  eegl may also
-be implemented with LFSR registers of other sizes.  I have tested
-eegl with 24-bit LFSR registers and 5-bit registers, and it has
-performed just as well as the 32-bit version.  For the 24-bit
+eegl is a random number generator (RNG) that produces an unsigned
+integer in a uniform distribution.  eegl is based on 1024 32-bit
+linear feedback shift registers (LFSR), called states.  eegl may
+also be implemented with LFSR registers of other sizes.  I have
+tested eegl with 24-bit LFSR registers and 5-bit registers, and it
+has performed just as well as the 32-bit version.  For the 24-bit
 version, see the eegl24 repository.  For the 5-bit version,
 see the Bays_Durham_Shuffle repository.  This repository is called
 eegl, and it concerns the 32-bit LFSR generator.
 
-Each cycle of the generator uses the taus randomizing algorithm,
-to select an LFSR at random.  The weaknesses of LFSR generators
-are eliminated by the random selection of one among many LFSR
-registers.  The number of LFSR registers does not affect the
-performance of the generator.  The performance is the same, whether
-the generator uses 1 register or 1000 registers.  Using more than
-1000 registers does not improve the generator's randomness to a
-significant extent.
+Each cycle of the generator uses a previous output to select
+an LFSR at random from the state array.  The weaknesses of LFSR
+generators are eliminated by the random selection of one among
+many LFSR registers.  The number of LFSR registers does not affect
+the performance of the generator.  The performance is the same,
+whether the generator uses 1 register or 1024 registers.  Using
+more than 1024 registers does not improve the generator's randomness
+to a significant extent.
 
 The period length of eegl is based on the Bays-Durham shuffle
-of 1024 outputs in a bit array.  The factorial of 1024 is
+of 1024 lfsr's in a state array.  The factorial of 1024 is
 5.41e+2639, or 2639 digits.  The theoretical period length of
 eegl is based on this factorial.  This period length is too long
 to be tested in practice.
 
+One way to test the period length is to build a database, where the
+key is two successive overlapping generations of eegl output.  If
+there are no duplicate keys after hundreds of trillions of generations,
+then the period length is at least as long as the test.  If the test
+fails, then increase the size of the key to three successive overlapping
+generations of eegl output, and rerun the test.
+
 Test results.
 
 The eegl random number generator has tested successfully with 
-1000 states in the following tests.
+1024 states in the following tests.
 
     dieharder -a
     TestU01 Crush
@@ -50,16 +57,19 @@ suite of tests.
 LFSR random number generators are known to fail linear complexity
 tests.  The matrix rank test is one of test that frequently fails
 with an LFSR RNG.  However, eegl passes these tests, perhaps
-because it selects randomly from among 1000 LFSR registers.  I have
-run eegl tests that failed with 1 state but passed with 2-1000 states.
+because it selects randomly from among 1024 LFSR states.  I have
+run eegl tests that failed with 1 state but passed with 2-1024 states.
 
 Benchmarking.
 
-eegl performs at about 1/6 of the speed of the fastest RNGs in
-the GNU Scientific Library (GSL).  eegl performs about twice as
-fast as ranlxd2 in the GNU Scientific Library (GSL).  These
+eegl performs about 1/4 faster than the fastest RNGs in the
+GNU Scientific Library (GSL).  eegl runs at least 20 times faster
+than ranlxd2 in the GNU Scientific Library (GSL).  These
 measurements were made with a benchmarking program in this
 repository, called eegltim.
+
+In the Monte Carlo simulations, eegl ran about as fast as the
+Mersenne Twister.
 
 When testing eeglraw as input to dieharder -g 200, be cautioned
 that the raw input feature of dieharder slows down the test.
@@ -72,13 +82,13 @@ test.
 
 Initialization.
 
-There is only one restriction in initializing 1000 LFSR states in
+There is only one restriction in initializing 1024 LFSR states in
 eegl.  An LFSR random number generator must be initialized to non-zero
 values.  eegl is initialized to as many as 4000 bytes of non-zero
 random values.  If you wish, you may override the initial values
 of the state array, so that you may conduct regression tests. You
-will also have to initialize the GSL taus random number generator
-to an arbitrary value.
+will also have to initialize the lfsr, prev, and pprev variables
+to arbitrary values.
 
 Initializing an LFSR register to a random value is made possible
 by the way the LFSR works.  Each value in a 32-bit LFSR occurs once
@@ -89,8 +99,8 @@ have restrictions in how they may be initialized.
 
 Since LFSR generators fail linear correlation tests, an argument
 may be made that there are "bad" initial values possible in an
-LFSR generator.  But having 1000 states in the generator circumvents
-this problem.  eegl passes linear correlation tests with 1000
+LFSR generator.  But having 1024 states in the generator circumvents
+this problem.  eegl passes linear correlation tests with 1024
 states.
 
 Distributed processing.
@@ -98,7 +108,9 @@ Distributed processing.
 eegl is conducive to running on a Beowulf style of supercomputer.
 Each of its 1000 LFSR registers may be manipulated independently
 in separate nodes.  The Bays-Durham shuffle in eegl may serve
-as a bottleneck for parallel processing.
+as a bottleneck for parallel processing.  Because the period length
+of eegl is very long, eegl may be run in parallel with different
+seeds.
 
 Supporting subroutines.
 
@@ -118,13 +130,17 @@ limit may be negative or positive.
 eeglpwr.c produces an unsigned integer of 1 to 32 bits.  It has
 two parameters, the eegl structure, and the number of bits.
 
+Eegl utilities.
+
 eeglgen.c produces an ASCII bit stream of zeroes and ones to stdout.
 
 eeglraw.c produces a raw stream of 32 bit unsigned integers to stdout.
 
 These last two programs are used to feed random data into down stream
-programs, such as the dieharder or STS suite of tests.
+programs, such as the dieharder or the random walk.
 
 See TESTING for more information.
+
+See INSTALL for installing eegl.
 
 The website for eegl is at https://aquila62.github.io.
