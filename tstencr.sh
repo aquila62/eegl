@@ -2,7 +2,7 @@
 if [ -z "$2" ]
 then
 echo "Usage: $0 filename password"
-echo "Example: $0 etaus.o abcdef"
+echo "Example: $0 eegl.o abcdef"
 exit 1
 fi
 if [ -e "$1" ]
@@ -13,6 +13,6 @@ echo "The two md5sums should be equal"
 else
 echo "filename does not exist"
 echo "Usage: $0 filename password"
-echo "Example: $0 etaus.o abcdef"
+echo "Example: $0 eegl.o abcdef"
 exit 1
 fi
